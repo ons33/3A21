@@ -27,9 +27,7 @@ class Author
     #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'auhtor', orphanRemoval: true)]
     private Collection $books;
 
-    #[ORM\OneToOne(inversedBy: 'author', cascade: ['persist', 'remove'])]
-    private ?student $student = null;
-
+   
     public function __construct()
     {
         $this->books = new ArrayCollection();
