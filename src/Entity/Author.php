@@ -15,37 +15,39 @@ class Author
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $username = null;
+    #[ORM\Column(length: 50)]
+    private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 50)]
     private ?string $email = null;
 
     /**
      * @var Collection<int, Book>
      */
-    #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'auhtor', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'author', orphanRemoval: true)]
     private Collection $books;
 
-   
     public function __construct()
     {
         $this->books = new ArrayCollection();
     }
+
+    
+  
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUsername(): ?string
+    public function getName(): ?string
     {
-        return $this->username;
+        return $this->name;
     }
 
-    public function setUsername(string $username): static
+    public function setName(string $name): static
     {
-        $this->username = $username;
+        $this->name = $name;
 
         return $this;
     }
@@ -74,7 +76,7 @@ class Author
     {
         if (!$this->books->contains($book)) {
             $this->books->add($book);
-            $book->setAuhtor($this);
+            $book->setAuthor($this);
         }
 
         return $this;
@@ -84,23 +86,20 @@ class Author
     {
         if ($this->books->removeElement($book)) {
             // set the owning side to null (unless already changed)
-            if ($book->getAuhtor() === $this) {
-                $book->setAuhtor(null);
+            if ($book->getAuthor() === $this) {
+                $book->setAuthor(null);
             }
         }
 
         return $this;
     }
 
-    public function getStudent(): ?student
-    {
-        return $this->student;
-    }
+  
+public function __toString()
+{
+    return $this->email;
+}
 
-    public function setStudent(?student $student): static
-    {
-        $this->student = $student;
 
-        return $this;
-    }
+
 }
